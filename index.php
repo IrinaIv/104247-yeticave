@@ -1,8 +1,8 @@
 <?php
-$is_auth = rand(0, 1);
+$isAuth = rand(0, 1);
 
-$user_name = ''; // укажите здесь ваше имя
-$user_avatar = 'img/user.jpg';
+$userName = 'Ирина';
+$userAvatar = 'img/user.jpg';
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
 $lotList = [
 	0 => [
@@ -68,12 +68,12 @@ $lotList = [
 
 			<nav class="user-menu">
 
-				<?php if ($is_auth): ?>
+				<?php if ($isAuth): ?>
 					<div class="user-menu__image">
 						<img src="img/user.jpg" width="40" height="40" alt="Пользователь">
 					</div>
 					<div class="user-menu__logged">
-						<p></p>
+						<p><?=$userName; ?></p>
 					</div>
 				<?php else: ?>
 					<ul class="user-menu__list">
