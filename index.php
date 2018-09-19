@@ -5,39 +5,39 @@ $userName = 'Ирина';
 $userAvatar = 'img/user.jpg';
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
 $lotList = [
-	0 => [
+	[
 		'title'		=> '2014 Rossignol District Snowboard',
-		'category'	=> 'Доски и лыжи',
+		'category'	=> $categories[0],
 		'price'		=> 10999,
 		'url'		=> 'img/lot-1.jpg',
 	],
-	1 => [
+	[
 		'title'		=> 'DC Ply Mens 2016/2017 Snowboard',
-		'category'	=> 'Доски и лыжи',
+		'category'	=> $categories[0],
 		'price'		=> 159999,
 		'url'		=> 'img/lot-2.jpg',
 	],
-	2 => [
+	[
 		'title'		=> 'Крепления Union Contact Pro 2015 года размер L/XL',
-		'category'	=> 'Крепления',
+		'category'	=> $categories[1],
 		'price'		=> 8000,
 		'url'		=> 'img/lot-3.jpg',
 	],
-	3 => [
+	[
 		'title'		=> 'Ботинки для сноуборда DC Mutiny Charocal',
-		'category'	=> 'Ботинки',
+		'category'	=> $categories[2],
 		'price'		=> 10999,
 		'url'		=> 'img/lot-4.jpg',
 	],
-	4 => [
+	[
 		'title'		=> 'Куртка для сноуборда DC Mutiny Charocal',
-		'category'	=> 'Одежда',
+		'category'	=> $categories[3],
 		'price'		=> 7500,
 		'url'		=> 'img/lot-5.jpg',
 	],
-	5 => [
+	[
 		'title'		=> 'Маска Oakley Canopy',
-		'category'	=> 'Разное',
+		'category'	=> $categories[5],
 		'price'		=> 5400,
 		'url'		=> 'img/lot-6.jpg',
 	],
@@ -73,7 +73,7 @@ $lotList = [
 						<img src="img/user.jpg" width="40" height="40" alt="Пользователь">
 					</div>
 					<div class="user-menu__logged">
-						<p><?=$userName; ?></p>
+						<p><?= $userName; ?></p>
 					</div>
 				<?php else: ?>
 					<ul class="user-menu__list">
@@ -96,9 +96,9 @@ $lotList = [
 			<p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и
 				горнолыжное снаряжение.</p>
 			<ul class="promo__list">
-				<?php foreach ($categories as $key => $val): ?>
+				<?php foreach ($categories as $categoryName): ?>
 					<li class="promo__item promo__item--boards">
-						<a class="promo__link" href="pages/all-lots.html"><?=$val; ?></a>
+						<a class="promo__link" href="pages/all-lots.html"><?= $categoryName; ?></a>
 					</li>
 				<?php endforeach; ?>
 			</ul>
@@ -108,18 +108,18 @@ $lotList = [
 				<h2>Открытые лоты</h2>
 			</div>
 			<ul class="lots__list">
-				<?php foreach ($lotList as $key => $val): ?>
+				<?php foreach ($lotList as $lotItem): ?>
 					<li class="lots__item lot">
 						<div class="lot__image">
-							<img src="<?=$val['url']; ?>" width="350" height="260" alt="">
+							<img src="<?= $lotItem['url']; ?>" width="350" height="260" alt="">
 						</div>
 						<div class="lot__info">
-							<span class="lot__category"><?=$val['category']; ?></span>
-							<h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$val['title']; ?></a></h3>
+							<span class="lot__category"><?= $lotItem['category']; ?></span>
+							<h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?= $lotItem['title']; ?></a></h3>
 							<div class="lot__state">
 								<div class="lot__rate">
 									<span class="lot__amount">Стартовая цена</span>
-									<span class="lot__cost"><?=$val['price']; ?><b class="rub">р</b></span>
+									<span class="lot__cost"><?= $lotItem['price']; ?><b class="rub">р</b></span>
 								</div>
 								<div class="lot__timer timer">
 
@@ -136,9 +136,9 @@ $lotList = [
 <footer class="main-footer">
 	<nav class="nav">
 		<ul class="nav__list container">
-			<?php foreach ($categories as $key => $val): ?>
+			<?php foreach ($categories as $categoryName): ?>
 				<li class="nav__item">
-					<a href="pages/all-lots.html"><?=$val; ?></a>
+					<a href="pages/all-lots.html"><?= $categoryName; ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ul>
