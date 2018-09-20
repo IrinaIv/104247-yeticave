@@ -3,41 +3,48 @@ $isAuth = rand(0, 1);
 
 $userName = 'Ирина';
 $userAvatar = 'img/user.jpg';
-$categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
+$categoryList = [
+	'boards'	=> 'Доски и лыжи',
+	'mounting'	=> 'Крепления',
+	'shoes'		=> 'Ботинки',
+	'clothes'	=> 'Одежда',
+	'tools'		=> 'Инструменты',
+	'other'		=> 'Разное',
+];
 $lotList = [
 	[
 		'title'		=> '2014 Rossignol District Snowboard',
-		'category'	=> $categories[0],
+		'category'	=> $categoryList['boards'],
 		'price'		=> 10999,
 		'url'		=> 'img/lot-1.jpg',
 	],
 	[
 		'title'		=> 'DC Ply Mens 2016/2017 Snowboard',
-		'category'	=> $categories[0],
+		'category'	=> $categoryList['boards'],
 		'price'		=> 159999,
 		'url'		=> 'img/lot-2.jpg',
 	],
 	[
 		'title'		=> 'Крепления Union Contact Pro 2015 года размер L/XL',
-		'category'	=> $categories[1],
+		'category'	=> $categoryList['mounting'],
 		'price'		=> 8000,
 		'url'		=> 'img/lot-3.jpg',
 	],
 	[
 		'title'		=> 'Ботинки для сноуборда DC Mutiny Charocal',
-		'category'	=> $categories[2],
+		'category'	=> $categoryList['shoes'],
 		'price'		=> 10999,
 		'url'		=> 'img/lot-4.jpg',
 	],
 	[
 		'title'		=> 'Куртка для сноуборда DC Mutiny Charocal',
-		'category'	=> $categories[3],
+		'category'	=> $categoryList['clothes'],
 		'price'		=> 7500,
 		'url'		=> 'img/lot-5.jpg',
 	],
 	[
 		'title'		=> 'Маска Oakley Canopy',
-		'category'	=> $categories[5],
+		'category'	=> $categoryList['other'],
 		'price'		=> 5400,
 		'url'		=> 'img/lot-6.jpg',
 	],
@@ -96,9 +103,9 @@ $lotList = [
 			<p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и
 				горнолыжное снаряжение.</p>
 			<ul class="promo__list">
-				<?php foreach ($categories as $categoryName): ?>
+				<?php foreach ($categoryList as $categoryItem): ?>
 					<li class="promo__item promo__item--boards">
-						<a class="promo__link" href="pages/all-lots.html"><?= $categoryName; ?></a>
+						<a class="promo__link" href="pages/all-lots.html"><?= $categoryItem; ?></a>
 					</li>
 				<?php endforeach; ?>
 			</ul>
@@ -136,9 +143,9 @@ $lotList = [
 <footer class="main-footer">
 	<nav class="nav">
 		<ul class="nav__list container">
-			<?php foreach ($categories as $categoryName): ?>
+			<?php foreach ($categoryList as $categoryItem): ?>
 				<li class="nav__item">
-					<a href="pages/all-lots.html"><?= $categoryName; ?></a>
+					<a href="pages/all-lots.html"><?= $categoryItem; ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ul>
