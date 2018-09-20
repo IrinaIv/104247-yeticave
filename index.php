@@ -49,6 +49,14 @@ $lotList = [
 		'url'		=> 'img/lot-6.jpg',
 	],
 ];
+
+function getFormattedPrice($price) {
+	$roundedPrice = ceil($price);
+
+	return $roundedPrice >= 1000
+		? number_format($roundedPrice, 0, '', ' ') . ' ₽'
+		: $roundedPrice . ' ₽';
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -126,7 +134,7 @@ $lotList = [
 							<div class="lot__state">
 								<div class="lot__rate">
 									<span class="lot__amount">Стартовая цена</span>
-									<span class="lot__cost"><?= $lotItem['price']; ?><b class="rub">р</b></span>
+									<span class="lot__cost"><?= getFormattedPrice($lotItem['price']); ?></span>
 								</div>
 								<div class="lot__timer timer">
 
