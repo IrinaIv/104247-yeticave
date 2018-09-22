@@ -20,6 +20,6 @@ function getFormattedPrice($price) {
 	$roundedPrice = ceil($price);
 
 	return $roundedPrice >= 1000
-		? number_format($roundedPrice, 0, '', ' ') . ' ₽'
-		: $roundedPrice . ' ₽';
+		? number_format($roundedPrice, 0, '', ' ')
+		: $roundedPrice;
 }

@@ -26,7 +26,9 @@
 					<div class="lot__state">
 						<div class="lot__rate">
 							<span class="lot__amount">Стартовая цена</span>
-							<span class="lot__cost"><?= getFormattedPrice(strip_tags($lotItem['price'])); ?></span>
+							<span class="lot__cost">
+								<?= getFormattedPrice(strip_tags($lotItem['price'])); ?>&nbsp;&#8381;
+							</span>
 						</div>
 						<div class="lot__timer timer">
 
