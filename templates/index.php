@@ -31,7 +31,7 @@
 							</span>
 						</div>
 						<div class="lot__timer timer">
-
+							<?= getFormattedTimeDifference(); ?>
 						</div>
 					</div>
 				</div>

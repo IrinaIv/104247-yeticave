@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @param $name
+ * @param $data
+ * @return string
+ */
 function includeTemplate($name, $data) {
 	$name = 'templates/' . $name;
 	$result = '';
@@ -16,10 +22,24 @@ function includeTemplate($name, $data) {
 	return $result;
 }
 
+/**
+ * @param $price
+ * @return float|string
+ */
 function getFormattedPrice($price) {
 	$roundedPrice = ceil($price);
 
 	return $roundedPrice >= 1000
 		? number_format($roundedPrice, 0, '', ' ')
 		: $roundedPrice;
+}
+
+/**
+ * @return string
+ */
+function getFormattedTimeDifference() {
+	$tomorrowTime = strtotime('tomorrow');
+	$secsToMidnight = $tomorrowTime - time();
+
+	return date('H:i', $secsToMidnight);
 }
