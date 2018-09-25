@@ -35,7 +35,8 @@ function getFormattedPrice($price) {
 }
 
 /**
- * @return string
+ * @param $timezone
+ * @return false|string
  */
 function getFormattedTimeDifference($timezone) {
 	// Где ее задавать? в index.php или внутри функции параметром?
