@@ -5,6 +5,7 @@ require_once('./data.php');
 $pageContent = includeTemplate('index.php', [
 	'categoryList'	=> $categoryList,
 	'lotList'		=> $lotList,
+	'timer'			=> getFormattedTimeDifference("Europe/Moscow"),
 ]);
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Главная',

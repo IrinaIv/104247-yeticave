@@ -37,9 +37,19 @@ function getFormattedPrice($price) {
 /**
  * @return string
  */
-function getFormattedTimeDifference() {
+function getFormattedTimeDifference($timezone) {
+	// Где ее задавать? в index.php или внутри функции параметром?
+	date_default_timezone_set($timezone);
+
 	$tomorrowTime = strtotime('tomorrow');
 	$secsToMidnight = $tomorrowTime - time();
 
-	return date('H:i', $secsToMidnight);
+	/*
+	 * return date('H:i', $secsToMidnight);
+	 * Возвращает время по гринвичу, игнорируя указанный timezone
+	 * Если в date() не передавать timestamp, то указанная timezone учитывается
+	 * При gmdate() все в точности наоборот
+	 * Почему так?
+	 */
+	return gmdate('H:i', $secsToMidnight);
 }
