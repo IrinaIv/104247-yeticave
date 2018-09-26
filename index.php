@@ -1,11 +1,11 @@
 <?php
+require_once('./configuration.php');
 require_once('./functions.php');
 require_once('./data.php');
 
 $pageContent = includeTemplate('index.php', [
 	'categoryList'	=> $categoryList,
 	'lotList'		=> $lotList,
-	'timer'			=> getFormattedTimeDifference("Europe/Moscow"),
 ]);
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Главная',

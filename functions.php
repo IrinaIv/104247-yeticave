@@ -1,29 +1,28 @@
 <?php
 
 /**
- * @param $name
- * @param $data
+ * Функция-шаблонизатор
+ * @param string $name имя шаблона
+ * @param array $data данные для шаблона
  * @return string
  */
 function includeTemplate($name, $data) {
 	$name = 'templates/' . $name;
-	$result = '';
 
-	if (!file_exists($name)) {
-		return $result;
+	if (!is_readable($name)) {
+		return '';
 	}
 
 	ob_start();
 	extract($data);
 	require($name);
 
-	$result = ob_get_clean();
-
-	return $result;
+	return ob_get_clean();
 }
 
 /**
- * @param $price
+ * Функция форматирует цену с разделением групп
+ * @param float|integer $price цена
  * @return float|string
  */
 function getFormattedPrice($price) {
@@ -35,22 +34,12 @@ function getFormattedPrice($price) {
 }
 
 /**
- * @param $timezone
+ * Функция считает, сколько секунд осталось до полуночи, и преобразует результат к формату ЧЧ:ММ
  * @return false|string
  */
-function getFormattedTimeDifference($timezone) {
-	// Где ее задавать? в index.php или внутри функции параметром?
-	date_default_timezone_set($timezone);
-
+function getFormattedTimeDifference() {
 	$tomorrowTime = strtotime('tomorrow');
 	$secsToMidnight = $tomorrowTime - time();
 
-	/*
-	 * return date('H:i', $secsToMidnight);
-	 * Возвращает время по гринвичу, игнорируя указанный timezone
-	 * Если в date() не передавать timestamp, то указанная timezone учитывается
-	 * При gmdate() все в точности наоборот
-	 * Почему так?
-	 */
 	return gmdate('H:i', $secsToMidnight);
 }
