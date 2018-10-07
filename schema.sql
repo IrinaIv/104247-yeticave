@@ -29,7 +29,7 @@ CREATE TABLE bets (
   bet_id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
   lot_id INT,
-  date TIMESTAMP,
+  date_created TIMESTAMP,
   price INT
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE users (
   name CHAR(128),
   email CHAR(128),
   password CHAR(128),
-  date TIMESTAMP,
+  date_registered TIMESTAMP,
   avatar CHAR(255),
   contacts CHAR(255)
 );
