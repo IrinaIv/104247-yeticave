@@ -1,27 +1,27 @@
-CREATE DATABASE yeticave
+CREATE DATABASE IF NOT EXISTS yeticave
   DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
   USE yeticave;
 
 CREATE TABLE categories (
   category_id INT AUTO_INCREMENT PRIMARY KEY,
-  name CHAR(128),
-  description CHAR(255)
+  alias CHAR(128),
+  title CHAR(128)
 );
-CREATE UNIQUE INDEX c_name ON categories(name);
-CREATE UNIQUE INDEX c_desc ON categories(description);
+CREATE UNIQUE INDEX c_alias ON categories(alias);
+CREATE UNIQUE INDEX c_title ON categories(title);
 
 CREATE TABLE lots (
   lot_id INT AUTO_INCREMENT PRIMARY KEY,
-  autor_id INT,
-  winner_id INT,
+  author_id INT,
+  winner_id INT DEFAULT NULL,
   category_id INT,
   name CHAR(128),
   description CHAR(255),
   image CHAR(255),
-  price INT,
-  date_created TIMESTAMP,
-  date_closed TIMESTAMP,
+  started_price INT,
+  date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  date_closed TIMESTAMP DEFAULT NULL,
   bet_step INT
 );
 
@@ -29,29 +29,19 @@ CREATE TABLE bets (
   bet_id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
   lot_id INT,
-  date_created TIMESTAMP,
+  date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   price INT
 );
+CREATE INDEX bets_date_created ON bets(date_created);
 
 CREATE TABLE users (
   user_id INT AUTO_INCREMENT PRIMARY KEY,
-  lot_id INT,
-  bet_id INT,
   name CHAR(128),
   email CHAR(128),
-  password CHAR(128),
-  date_registered TIMESTAMP,
+  password CHAR(255),
+  date_registered TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   avatar CHAR(255),
-  contacts CHAR(255)
+  contacts TEXT
 );
 CREATE UNIQUE INDEX u_email ON users(email);
-
-ALTER TABLE lots ADD FOREIGN KEY (autor_id) REFERENCES users(user_id);
-ALTER TABLE lots ADD FOREIGN KEY (winner_id) REFERENCES users(user_id);
-ALTER TABLE lots ADD FOREIGN KEY (category_id) REFERENCES categories(category_id);
-
-ALTER TABLE bets ADD FOREIGN KEY (user_id) REFERENCES users(user_id);
-ALTER TABLE bets ADD FOREIGN KEY (lot_id) REFERENCES lots(lot_id);
-
-ALTER TABLE users ADD FOREIGN KEY (lot_id) REFERENCES lots(lot_id);
-ALTER TABLE users ADD FOREIGN KEY (bet_id) REFERENCES bets(bet_id);
+CREATE INDEX users_email ON users(email);
