@@ -19,9 +19,9 @@ CREATE TABLE lots (
   name CHAR(128),
   description CHAR(255),
   image CHAR(255),
-  price INT,
+  started_price INT,
   date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  date_closed TIMESTAMP,
+  date_closed TIMESTAMP DEFAULT NULL,
   bet_step INT
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE users (
   password CHAR(255),
   date_registered TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   avatar CHAR(255),
-  contacts CHAR(255)
+  contacts TEXT
 );
 CREATE UNIQUE INDEX u_email ON users(email);
 CREATE INDEX users_email ON users(email);
