@@ -23,8 +23,8 @@ if (!$connection) {
 		print($error);
 	}
 
-	$lotsSql = 'SELECT bets.lot_id, name, started_price, image, COUNT(bet_id) AS bets_count,'
-		. ' MAX(bets.price) AS bets_max_price, title FROM lots'
+	$lotsSql = 'SELECT bets.lot_id, name, started_price, image AS img_url, COUNT(bet_id) AS bets_count,'
+		. ' MAX(bets.price) AS bets_max_price, title AS category_name FROM lots'
 		. ' JOIN bets ON lots.lot_id = bets.lot_id'
 		. ' JOIN categories ON lots.category_id = categories.category_id'
 		. ' WHERE date_closed IS NULL'
