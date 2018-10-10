@@ -1,7 +1,5 @@
 <?php
-require_once('./configuration.php');
-require_once('./functions.php');
-require_once('./data.php');
+require_once('./init.php');
 
 $pageContent = includeTemplate('index.php', [
 	'categoryList'	=> $categoryList,
@@ -9,9 +7,9 @@ $pageContent = includeTemplate('index.php', [
 ]);
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Главная',
-	'isAuth'		=> $isAuth,
-	'userAvatar'	=> $userAvatar,
-	'userName'		=> $userName,
+	'isAuth'		=> rand(0, 1),
+	'userAvatar'	=> 'img/user.jpg',
+	'userName'		=> 'User',
 	'content'		=> $pageContent,
 	'categoryList'	=> $categoryList,
 ]);
