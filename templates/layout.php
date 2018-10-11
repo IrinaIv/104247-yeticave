@@ -53,7 +53,7 @@
 		<ul class="nav__list container">
 			<?php foreach ($categoryList as $categoryItem): ?>
 				<li class="nav__item">
-					<a href="pages/all-lots.html"><?= $categoryItem; ?></a>
+					<a href="pages/all-lots.html"><?= $categoryItem['title']; ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ul>
