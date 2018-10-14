@@ -43,3 +43,16 @@ function getFormattedTimeDifference() {
 
 	return gmdate('H:i', $secsToMidnight);
 }
+
+/**
+ * @param $connection
+ * @param $sqlRequest
+ * @return array|null|string
+ */
+function getDataFromDatabase($connection, $sqlRequest) {
+	$result = mysqli_query($connection, $sqlRequest);
+
+	return $result
+		? mysqli_fetch_all($result, MYSQLI_ASSOC)
+		: mysqli_error($connection);
+}

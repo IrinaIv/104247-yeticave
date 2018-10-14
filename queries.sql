@@ -41,29 +41,17 @@ VALUES
 /* Получить все категории */
 SELECT * FROM categories;
 
-
-
-
-
-
 /* Получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену последней ставки, количество ставок, название категории */
 SELECT name, started_price, image, price, title FROM lots
 JOIN bets ON lots.lot_id = bets.lot_id
 JOIN categories ON lots.category_id = categories.category_id
 WHERE date_closed IS NULL;
 
-/* Как вывести последнюю цену ставки */
 SELECT bets.lot_id, name, started_price, image, COUNT(bet_id) AS bets_count, MAX(bets.price), title FROM lots
 JOIN bets ON lots.lot_id = bets.lot_id
 JOIN categories ON lots.category_id = categories.category_id
 WHERE date_closed IS NULL
 GROUP BY bets.lot_id;
-
-
-
-
-
-
 
 /* Показать лот по его id. Получите также название категории, к которой принадлежит лот */
 SELECT lots.*, title FROM lots
