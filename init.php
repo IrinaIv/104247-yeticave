@@ -1,7 +1,7 @@
 <?php
 require_once('./configuration.php');
 require_once('./functions.php');
-if (is_readable('config/database.local.php')) {
+if (is_readable('config/database_local.php')) {
 	require_once('config/database_local.php');
 } else {
 	require_once('config/database.php');
