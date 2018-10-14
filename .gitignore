@@ -7,4 +7,4 @@
 *.sublime*
 Thumbs.db
 vendor
-config/database.local.php
+config/database_local.php
