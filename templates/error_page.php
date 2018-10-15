@@ -1,3 +1,3 @@
 <section>
-	<span>ERROR: <?= $error; ?></span>
+	<span><?= $error; ?></span>
 </section>
