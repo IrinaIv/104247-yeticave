@@ -12,8 +12,20 @@ mysqli_set_charset($connection, 'utf8');
 
 if (!$connection) {
 	$error = mysqli_connect_error();
-	print($error); /* TODO error*/
+	$errorPage = includeTemplate('error_page.php', [
+		'error'	=> $error
+	]);
+	print($errorPage);
+	exit();
 } else {
 	$categoriesSql = 'SELECT title FROM categories';
-	$categoryList = getDataFromDatabase($connection, $categoriesSql); /* TODO error */
+	$categoryList = getDataFromDatabase($connection, $categoriesSql);
+
+	if (!$categoryList) {
+		$errorPage = includeTemplate('error_page.php', [
+			'error'	=> mysqli_error($connection)
+		]);
+		print($errorPage);
+		exit();
+	}
 }

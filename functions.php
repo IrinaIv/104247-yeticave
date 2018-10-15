@@ -47,12 +47,12 @@ function getFormattedTimeDifference() {
 /**
  * @param $connection
  * @param $sqlRequest
- * @return array|null|string
+ * @return array|bool|null
  */
 function getDataFromDatabase($connection, $sqlRequest) {
 	$result = mysqli_query($connection, $sqlRequest);
 
 	return $result
 		? mysqli_fetch_all($result, MYSQLI_ASSOC)
-		: mysqli_error($connection); /* TODO error */
+		: false;
 }

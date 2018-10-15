@@ -3,9 +3,11 @@ require_once('./init.php');
 
 if (!$connection) {
 	$error = mysqli_connect_error();
-	$pageContent = includeTemplate('error_page.php', [
+	$errorPage = includeTemplate('error_page.php', [
 		'error'	=> $error
 	]);
+	print($errorPage);
+	exit();
 } else {
 	$lotsSql = 'SELECT lot_id, name, started_price, image AS img_url, categories.title AS category_name FROM lots'
 		. ' JOIN categories ON lots.category_id = categories.category_id'
@@ -13,17 +15,19 @@ if (!$connection) {
 		. ' ORDER BY date_created DESC';
 	$lotList = getDataFromDatabase($connection, $lotsSql);
 
-	if (!empty($lotList)) {
-		$pageContent = includeTemplate('index.php', [
-			'categoryList'	=> $categoryList,
-			'lotList'		=> $lotList,
+	if (!$lotList) {
+		$errorPage = includeTemplate('error_page.php', [
+			'error'	=> mysqli_error($connection)
 		]);
-	} else {
-		$pageContent = includeTemplate('error_page.php', [
-			'error'	=> $lotList
-		]);
+		print($errorPage);
+		exit();
 	}
 }
+
+$pageContent = includeTemplate('index.php', [
+	'categoryList'	=> $categoryList,
+	'lotList'		=> $lotList,
+]);
 
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Главная',
