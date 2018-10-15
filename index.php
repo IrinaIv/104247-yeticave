@@ -16,18 +16,25 @@ if (!$connection) {
 	$lotList = getDataFromDatabase($connection, $lotsSql);
 
 	if (!$lotList) {
-		$errorPage = includeTemplate('error_page.php', [
-			'error'	=> mysqli_error($connection)
+		if (count($lotList) === 0) {
+			$pageContent = includeTemplate('error_page.php', [
+				'error'	=> 'Нет лотов'
+			]);
+		}
+		if ($lotList === false) {
+			$errorPage = includeTemplate('error_page.php', [
+				'error'	=> mysqli_error($connection)
+			]);
+			print($errorPage);
+			exit();
+		}
+	} else {
+		$pageContent = includeTemplate('index.php', [
+			'categoryList'	=> $categoryList,
+			'lotList'		=> $lotList,
 		]);
-		print($errorPage);
-		exit();
 	}
 }
-
-$pageContent = includeTemplate('index.php', [
-	'categoryList'	=> $categoryList,
-	'lotList'		=> $lotList,
-]);
 
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Главная',
