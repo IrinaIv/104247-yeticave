@@ -2,6 +2,6 @@
 $database = [
 	'host'		=> 'localhost',
 	'user'		=> 'root',
-	'password'	=> 'QazXsw123%=',
+	'password'	=> '',
 	'database'	=> 'yeticave'
 ];
