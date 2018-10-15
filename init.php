@@ -12,14 +12,8 @@ mysqli_set_charset($connection, 'utf8');
 
 if (!$connection) {
 	$error = mysqli_connect_error();
-	print($error);
+	print($error); /* TODO error*/
 } else {
 	$categoriesSql = 'SELECT title FROM categories';
-	$categoryList = getDataFromDatabase($connection, $categoriesSql);
-
-	$lotsSql = 'SELECT name, started_price, image AS img_url, categories.title AS category_name FROM lots'
-		. ' JOIN categories ON lots.category_id = categories.category_id'
-		. ' WHERE date_closed IS NULL'
-		. ' ORDER BY date_created DESC';
-	$lotList = getDataFromDatabase($connection, $lotsSql);
+	$categoryList = getDataFromDatabase($connection, $categoriesSql); /* TODO error */
 }

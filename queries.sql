@@ -19,14 +19,23 @@ VALUES
   ('Виктор', 'viktor@m.ru', 'B97873A40F73ABEDD8D685A7CD5E5F85E4A9CFB83EAC26886640A0813850122B', 'img/user.jpg');
 
 INSERT INTO
-  lots(author_id, category_id, name, description, image, started_price)
+  lots(author_id, category_id, name, description, image, started_price, bet_step)
 VALUES
-  (3, 1, '2014 Rossignol District Snowboard', 'Доска', 'img/lot-1.jpg', 10999),
-  (2, 1, 'DC Ply Mens 2016/2017 Snowboard', 'Доска', 'img/lot-2.jpg', 159999),
-  (1, 2, 'Крепления Union Contact Pro 2015 года размер L/XL', 'Крепления', 'img/lot-3.jpg', 8000),
-  (1, 3, 'Ботинки для сноуборда DC Mutiny Charocal', 'Ботинки', 'img/lot-4.jpg', 10999),
-  (4, 4, 'Куртка для сноуборда DC Mutiny Charocal', 'Куртка', 'img/lot-5.jpg', 7500),
-  (2, 6, 'Маска Oakley Canopy', 'Маска', 'img/lot-6.jpg', 5400);
+  (3, 1, '2014 Rossignol District Snowboard', 'Доска', 'img/lot-1.jpg', 10999, 5000),
+  (2, 1, 'DC Ply Mens 2016/2017 Snowboard', 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
+				снег
+				мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
+				снаряд
+				отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом
+				кэмбер
+				позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется,
+				просто
+				посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла
+				равнодушным.', 'img/lot-2.jpg', 159999, 12000),
+  (1, 2, 'Крепления Union Contact Pro 2015 года размер L/XL', 'Крепления', 'img/lot-3.jpg', 8000, 2000),
+  (1, 3, 'Ботинки для сноуборда DC Mutiny Charocal', 'Ботинки', 'img/lot-4.jpg', 10999, 3000),
+  (4, 4, 'Куртка для сноуборда DC Mutiny Charocal', 'Куртка', 'img/lot-5.jpg', 7500, 2500),
+  (2, 6, 'Маска Oakley Canopy', 'Маска', 'img/lot-6.jpg', 5400, 1500);
 
 INSERT INTO
   bets(user_id, lot_id, price)
@@ -36,7 +45,13 @@ VALUES
   (3, 3, 10000),
   (4, 4, 12000),
   (3, 5, 8000),
-  (4, 6, 6000);
+  (4, 6, 6000),
+  (4, 1, 17000),
+  (3, 2, 180000),
+  (2, 3, 20000),
+  (1, 4, 16000),
+  (1, 5, 10000),
+  (4, 6, 8000);
 
 /* Получить все категории */
 SELECT * FROM categories;

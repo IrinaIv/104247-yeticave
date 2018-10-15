@@ -17,7 +17,7 @@ CREATE TABLE lots (
   winner_id INT DEFAULT NULL,
   category_id INT,
   name CHAR(128),
-  description CHAR(255),
+  description TEXT,
   image CHAR(255),
   started_price INT,
   date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

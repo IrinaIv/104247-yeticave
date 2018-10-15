@@ -54,5 +54,5 @@ function getDataFromDatabase($connection, $sqlRequest) {
 
 	return $result
 		? mysqli_fetch_all($result, MYSQLI_ASSOC)
-		: mysqli_error($connection);
+		: mysqli_error($connection); /* TODO error */
 }
