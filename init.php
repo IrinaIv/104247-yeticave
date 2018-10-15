@@ -18,7 +18,7 @@ if (!$connection) {
 	print($errorPage);
 	exit();
 } else {
-	$categoriesSql = 'SELECT title FROM categories';
+	$categoriesSql = 'SELECT category_id, title FROM categories';
 	$categoryList = getDataFromDatabase($connection, $categoriesSql);
 
 	if (!$categoryList) {

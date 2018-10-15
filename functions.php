@@ -56,3 +56,44 @@ function getDataFromDatabase($connection, $sqlRequest) {
 		? mysqli_fetch_all($result, MYSQLI_ASSOC)
 		: false;
 }
+
+/**
+ * @param $connection
+ * @param $sqlRequest
+ * @param array $data
+ * @return bool|mysqli_stmt
+ */
+function db_get_prepare_stmt($connection, $sqlRequest, $data = []) {
+	$stmt = mysqli_prepare($connection, $sqlRequest);
+
+	if ($data) {
+		$types = '';
+		$stmt_data = [];
+
+		foreach ($data as $value) {
+			$type = null;
+
+			if (is_int($value)) {
+				$type = 'i';
+			}
+			else if (is_string($value)) {
+				$type = 's';
+			}
+			else if (is_double($value)) {
+				$type = 'd';
+			}
+
+			if ($type) {
+				$types .= $type;
+				$stmt_data[] = $value;
+			}
+		}
+
+		$values = array_merge([$stmt, $types], $stmt_data);
+
+		$func = 'mysqli_stmt_bind_param';
+		$func(...$values);
+	}
+
+	return $stmt;
+}
