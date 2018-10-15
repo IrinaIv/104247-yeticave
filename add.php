@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		}
 	}
 
-	if(!$lot['lot_rate'] > 0) {
+	if(!intval($lot['lot_rate']) > 0) {
 		$errors['lot_rate'] = 'Цена должна быть больше 0';
 	}
 
