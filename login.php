@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 	if (count($errors)) {
-		$page_content = includeTemplate('log_in.php', [
+		$pageContent = includeTemplate('log_in.php', [
 			'form'		=> $form,
 			'errors'	=> $errors
 		]);
