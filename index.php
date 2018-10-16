@@ -38,9 +38,9 @@ if (!$connection) {
 
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Главная',
-	'isAuth'		=> rand(0, 1),
-	'userAvatar'	=> 'img/user.jpg',
-	'userName'		=> 'User',
+	'isAuth'		=> isset($_SESSION['user']),
+	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
+	'userName'		=> $_SESSION['user']['name'] ?? '',
 	'content'		=> $pageContent,
 	'categoryList'	=> $categoryList,
 ]);

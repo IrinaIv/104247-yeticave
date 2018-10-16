@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$user['name'],
 				$user['email'],
 				$password,
-				$user['user_img'],
+				$user['user_img'] ?? '',
 				$user['message']
 			]);
 			$res = mysqli_stmt_execute($stmt);
@@ -69,9 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Регистрация',
-	'isAuth'		=> false,
-	'userAvatar'	=> '',
-	'userName'		=> '',
+	'isAuth'		=> isset($_SESSION['user']),
+	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
+	'userName'		=> $_SESSION['user']['name'] ?? '',
 	'content'		=> $pageContent,
 	'categoryList'	=> $categoryList,
 ]);

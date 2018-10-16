@@ -19,7 +19,9 @@
 				<input type="search" name="search" placeholder="Поиск лота">
 				<input class="main-header__search-btn" type="submit" name="find" value="Найти">
 			</form>
-			<a class="main-header__add-lot button" href="add.php">Добавить лот</a>
+			<?php if ($isAuth): ?>
+				<a class="main-header__add-lot button" href="add.php">Добавить лот</a>
+			<?php endif; ?>
 
 			<nav class="user-menu">
 
@@ -30,13 +32,16 @@
 					<div class="user-menu__logged">
 						<p><?= $userName; ?></p>
 					</div>
+					<div>
+						<a href="logout.php">Выход</a>
+					</div>
 				<?php else: ?>
 					<ul class="user-menu__list">
 						<li class="user-menu__item">
 							<a href="signup.php">Регистрация</a>
 						</li>
 						<li class="user-menu__item">
-							<a href="#">Вход</a>
+							<a href="login.php">Вход</a>
 						</li>
 					</ul>
 				<?php endif; ?>
@@ -101,7 +106,9 @@
 				</svg>
 			</a>
 		</div>
-		<a class="main-footer__add-lot button" href="add-lot.html">Добавить лот</a>
+		<?php if ($isAuth): ?>
+			<a class="main-footer__add-lot button" href="add-lot.html">Добавить лот</a>
+		<?php endif; ?>
 		<div class="main-footer__developed-by">
 			<span class="visually-hidden">Разработано:</span>
 			<a class="logo-academy" href="https://htmlacademy.ru/intensive/php">

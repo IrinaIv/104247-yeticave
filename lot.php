@@ -29,15 +29,18 @@ if (isset($_GET['id'])) {
 }
 
 $pageContent = includeTemplate('lot_page.php', [
+	'isAuth'		=> isset($_SESSION['user']),
 	'lotData'		=> $lotData[0],
-	'currentPrice'	=> $betData[0]['price'] ?? $lotData[0]['started_price']
+	'currentPrice'	=> $betData[0]['price'] ?? $lotData[0]['started_price'],
+	'betAmount'		=> 0,
+	'betList'		=> [],
 ]);
 
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> $lotData[0]['name'],
-	'isAuth'		=> rand(0, 1),
-	'userAvatar'	=> 'img/user.jpg',
-	'userName'		=> 'User',
+	'isAuth'		=> isset($_SESSION['user']),
+	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
+	'userName'		=> $_SESSION['user']['name'] ?? '',
 	'content'		=> $pageContent,
 	'categoryList'	=> $categoryList,
 ]);
