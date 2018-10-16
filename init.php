@@ -7,6 +7,8 @@ if (is_readable('config/database_local.php')) {
 	require_once('config/database.php');
 }
 
+session_start();
+
 $connection = mysqli_connect($database['host'], $database['user'], $database['password'], $database['database']);
 mysqli_set_charset($connection, 'utf8');
 

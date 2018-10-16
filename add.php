@@ -1,6 +1,11 @@
 <?php
 require_once('./init.php');
 
+if (!isset($_SESSION['user'])) {
+	http_response_code(403);
+	exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$lot = $_POST;
 	$required = ['lot_name', 'category', 'message', 'lot_rate', 'lot_step', 'lot_date'];
@@ -76,9 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $layoutContent = includeTemplate('layout.php', [
 	'title'			=> 'Добавление лота',
-	'isAuth'		=> rand(0, 1),
-	'userAvatar'	=> 'img/user.jpg',
-	'userName'		=> 'User',
+	'isAuth'		=> isset($_SESSION['user']),
+	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
+	'userName'		=> $_SESSION['user']['name'] ?? '',
 	'content'		=> $pageContent,
 	'categoryList'	=> $categoryList,
 ]);
