@@ -97,3 +97,15 @@ function db_get_prepare_stmt($connection, $sqlRequest, $data = []) {
 
 	return $stmt;
 }
+
+function getLayoutContent($page, $content, $categories) {
+	//var_dump($_SESSION['user']['avatar']); /* TODO empty string */
+	return $layoutContent = includeTemplate('layout.php', [
+		'title'			=> $page,
+		'isAuth'		=> isset($_SESSION['user']),
+		'userAvatar'	=> $_SESSION['user']['avatar'] ?? 'img/user.jpg', /* TODO stops at empty string */
+		'userName'		=> $_SESSION['user']['name'] ?? '',
+		'content'		=> $content,
+		'categoryList'	=> $categories,
+	]);
+}

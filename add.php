@@ -20,10 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if(!intval($lot['lot_rate']) > 0) {
 		$errors['lot_rate'] = 'Цена должна быть больше 0';
 	}
+	/* TODO check date DD MM YYYY? */
 
-	if ($_FILES['lot_img']['name']) {
+	/*if ($_FILES['lot_img']['name']) {
 		$tmpName = $_FILES['lot_img']['tmp_name'];
-		$path = $_FILES['lot_img']['name'];
+		$path = $_FILES['lot_img']['name']; // TODO uniqueid func
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$fileType = finfo_file($finfo, $tmpName);
 		if ($fileType === 'image/jpeg' || $fileType === 'image/png') {
@@ -34,20 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		}
 	} else {
 		$errors['file'] = 'Вы не загрузили файл';
-	}
+	}*/ /* TODO uncomment and fix path */
 
 	if (count($errors)) {
 		$pageContent = includeTemplate('add_lot.php', [
 			'categoryList'	=> $categoryList,
-			'formError'		=> 'form--invalid',
 			'errors'		=> $errors,
 			'lot'			=> $lot,
 		]);
 	} else {
 		$sql = 'INSERT INTO lots(date_created, author_id, category_id, name, description, image, started_price, date_closed, bet_step)'
-			. ' VALUES (NOW(), 1, ?, ?, ?, ?, ?, ?, ?)';
+			. ' VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
 		$stmt = db_get_prepare_stmt($connection, $sql, [
+			$_SESSION['user']['user_id'],
 			$lot['category'],
 			$lot['lot_name'],
 			$lot['message'],
@@ -60,11 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		if ($result) {
 			$lot_id = mysqli_insert_id($connection);
-
-			header("Location: lot.php?id=" . $lot_id);
-		} else {
+			header('Location: lot.php?id=' . $lot_id);
+		} else { /* TODO else needed? */
 			$errorPage = includeTemplate('error_page.php', [
-				'error'	=> mysqli_error($connection)
+				'error'	=> mysqli_error($connection),
 			]);
 			print($errorPage);
 			exit();
@@ -73,19 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
 	$pageContent = includeTemplate('add_lot.php', [
 		'categoryList'	=> $categoryList,
-		'formError'		=> '',
 		'errors'		=> [],
 		'lot'			=> [],
 	]);
 }
 
-$layoutContent = includeTemplate('layout.php', [
-	'title'			=> 'Добавление лота',
-	'isAuth'		=> isset($_SESSION['user']),
-	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
-	'userName'		=> $_SESSION['user']['name'] ?? '',
-	'content'		=> $pageContent,
-	'categoryList'	=> $categoryList,
-]);
-
-print($layoutContent);
+print(getLayoutContent('Добавление лота', $pageContent, $categoryList));
