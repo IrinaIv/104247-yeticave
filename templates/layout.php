@@ -27,12 +27,10 @@
 
 				<?php if ($isAuth): ?>
 					<div class="user-menu__image">
-						<img src="<?= $userAvatar; ?>" width="40" height="40" alt="Пользователь">
+						<img src="<?= $userAvatar ? $userAvatar : 'img/user.jpg'; ?>" width="40" height="40" alt="Пользователь">
 					</div>
 					<div class="user-menu__logged">
-						<p><?= $userName; ?></p>
-					</div>
-					<div>
+						<p><?= htmlspecialchars($userName); ?></p>
 						<a href="logout.php">Выход</a>
 					</div>
 				<?php else: ?>

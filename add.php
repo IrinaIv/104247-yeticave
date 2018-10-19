@@ -18,17 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 	if(!intval($lot['lot_rate']) > 0) {
-		$errors['lot_rate'] = 'Цена должна быть больше 0';
+		$errors['lot_rate'] = 'Укажите цену';
+	}
+	if(!intval($lot['lot_step']) > 0) {
+		$errors['lot_step'] = 'Укажите шаг ставки';
+	}
+	if (strtotime(strip_tags($lot['lot_date'])) < time() + 1) {
+		$errors['lot_date'] = 'Укажите будущую дату';
 	}
 
 	if ($_FILES['lot_img']['name']) {
 		$tmpName = $_FILES['lot_img']['tmp_name'];
-		$path = $_FILES['lot_img']['name'];
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$fileType = finfo_file($finfo, $tmpName);
 		if ($fileType === 'image/jpeg' || $fileType === 'image/png') {
+			$path = uniqid() . '.' . substr($fileType, 6);
 			move_uploaded_file($tmpName, 'img/' . $path);
-			$lot['img_path'] = $path;
+			$lot['img_path'] = 'img/' . $path;
 		} else {
 			$errors['file'] = 'Загрузите картинку в нужном формате';
 		}
@@ -39,15 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if (count($errors)) {
 		$pageContent = includeTemplate('add_lot.php', [
 			'categoryList'	=> $categoryList,
-			'formError'		=> 'form--invalid',
 			'errors'		=> $errors,
 			'lot'			=> $lot,
 		]);
 	} else {
 		$sql = 'INSERT INTO lots(date_created, author_id, category_id, name, description, image, started_price, date_closed, bet_step)'
-			. ' VALUES (NOW(), 1, ?, ?, ?, ?, ?, ?, ?)';
+			. ' VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
 		$stmt = db_get_prepare_stmt($connection, $sql, [
+			$_SESSION['user']['user_id'],
 			$lot['category'],
 			$lot['lot_name'],
 			$lot['message'],
@@ -58,22 +64,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		]);
 		$result = mysqli_stmt_execute($stmt);
 
-		if ($result) {
-			$lot_id = mysqli_insert_id($connection);
-
-			header("Location: lot.php?id=" . $lot_id);
-		} else {
+		if (!$result) {
 			$errorPage = includeTemplate('error_page.php', [
-				'error'	=> mysqli_error($connection)
+				'error'	=> mysqli_error($connection),
 			]);
 			print($errorPage);
 			exit();
 		}
+
+		$lot_id = mysqli_insert_id($connection);
+		header('Location: lot.php?id=' . $lot_id);
+		exit();
 	}
 } else {
 	$pageContent = includeTemplate('add_lot.php', [
 		'categoryList'	=> $categoryList,
-		'formError'		=> '',
 		'errors'		=> [],
 		'lot'			=> [],
 	]);

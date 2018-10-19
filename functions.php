@@ -2,8 +2,8 @@
 
 /**
  * Функция-шаблонизатор
- * @param string $name имя шаблона
- * @param array $data данные для шаблона
+ * @param string $name Имя шаблона
+ * @param array $data Данные для шаблона
  * @return string
  */
 function includeTemplate($name, $data) {
@@ -22,7 +22,7 @@ function includeTemplate($name, $data) {
 
 /**
  * Функция форматирует цену с разделением групп
- * @param float|integer $price цена
+ * @param float|integer $price Цена
  * @return float|string
  */
 function getFormattedPrice($price) {
@@ -45,8 +45,9 @@ function getFormattedTimeDifference() {
 }
 
 /**
- * @param $connection
- * @param $sqlRequest
+ * Функция для получения данных из БД
+ * @param mysqli $connection Ресурс соединения
+ * @param string $sqlRequest SQL-запрос
  * @return array|bool|null
  */
 function getDataFromDatabase($connection, $sqlRequest) {
@@ -58,9 +59,10 @@ function getDataFromDatabase($connection, $sqlRequest) {
 }
 
 /**
- * @param $connection
- * @param $sqlRequest
- * @param array $data
+ * Функция создает подготовленное выражение на основе готового SQL-запроса и переданных данных
+ * @param mysqli $connection Ресурс соединения
+ * @param string $sqlRequest SQL-запрос с плейсхолдерами вместо значений
+ * @param array $data Данные для вставки на место плейсхолдеров
  * @return bool|mysqli_stmt
  */
 function db_get_prepare_stmt($connection, $sqlRequest, $data = []) {

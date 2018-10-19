@@ -19,15 +19,15 @@ if (!$connection) {
 	]);
 	print($errorPage);
 	exit();
-} else {
-	$categoriesSql = 'SELECT category_id, title FROM categories';
-	$categoryList = getDataFromDatabase($connection, $categoriesSql);
+}
 
-	if (!$categoryList) {
-		$errorPage = includeTemplate('error_page.php', [
-			'error'	=> mysqli_error($connection)
-		]);
-		print($errorPage);
-		exit();
-	}
+$categoriesSql = 'SELECT category_id, title FROM categories';
+$categoryList = getDataFromDatabase($connection, $categoriesSql);
+
+if ($categoryList === false) {
+	$errorPage = includeTemplate('error_page.php', [
+		'error'	=> mysqli_error($connection),
+	]);
+	print($errorPage);
+	exit();
 }

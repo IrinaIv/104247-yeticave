@@ -9,22 +9,30 @@ if (isset($_GET['id'])) {
 		]);
 		print($errorPage);
 		exit();
-	} else {
-		$lotsSql = 'SELECT name, description, image AS img_url, started_price, bet_step, categories.title AS category_name FROM lots'
-			. ' JOIN categories ON lots.category_id = categories.category_id'
-			. ' WHERE lot_id = ' . intval($_GET['id']);
-		$lotData = getDataFromDatabase($connection, $lotsSql);
+	}
 
-		$betSql = 'SELECT price FROM bets'
-		. ' WHERE lot_id = ' . intval($_GET['id'])
-		. ' GROUP BY bet_id'
-		. ' ORDER BY date_created DESC';
-		$betData = getDataFromDatabase($connection, $betSql);
+	$lotsSql = 'SELECT name, description, image AS img_url, started_price, bet_step, categories.title AS category_name FROM lots'
+		. ' JOIN categories ON lots.category_id = categories.category_id'
+		. ' WHERE lot_id = ' . intval($_GET['id']);
+	$lotData = getDataFromDatabase($connection, $lotsSql);
 
-		if (!$lotData) {
-			http_response_code(404);
-			exit();
-		}
+	$betSql = 'SELECT price FROM bets'
+	. ' WHERE lot_id = ' . intval($_GET['id'])
+	. ' GROUP BY bet_id'
+	. ' ORDER BY date_created DESC';
+	$betData = getDataFromDatabase($connection, $betSql);
+
+	if ($lotData === false || $betData === false) {
+		$errorPage = includeTemplate('error_page.php', [
+			'error'	=> mysqli_error($connection),
+		]);
+		print($errorPage);
+		exit();
+	}
+
+	if (!$lotData) {
+		http_response_code(404);
+		exit();
 	}
 }
 

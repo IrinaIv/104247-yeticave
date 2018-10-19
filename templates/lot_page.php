@@ -21,14 +21,14 @@
 	</ul>
 </nav>
 <section class="lot-item container">
-	<h2><?= $lotData['name']; ?></h2>
+	<h2><?= htmlspecialchars($lotData['name']); ?></h2>
 	<div class="lot-item__content">
 		<div class="lot-item__left">
 			<div class="lot-item__image">
 				<img src="<?= $lotData['img_url']; ?>" width="730" height="548" alt="Сноуборд">
 			</div>
 			<p class="lot-item__category">Категория: <span><?= $lotData['category_name']; ?></span></p>
-			<p class="lot-item__description"><?= $lotData['description']; ?></p>
+			<p class="lot-item__description"><?= htmlspecialchars($lotData['description']); ?></p>
 		</div>
 		<div class="lot-item__right">
 			<div class="lot-item__state">
@@ -38,7 +38,7 @@
 				<div class="lot-item__cost-state">
 					<div class="lot-item__rate">
 						<span class="lot-item__amount">Текущая цена</span>
-						<span class="lot-item__cost"><?= getFormattedPrice($currentPrice); ?></span>
+						<span class="lot-item__cost"><?= getFormattedPrice(strip_tags($currentPrice)); ?></span>
 					</div>
 					<div class="lot-item__min-cost">
 						Мин. ставка <span><?= getFormattedPrice(strip_tags($lotData['bet_step'])); ?></span>
