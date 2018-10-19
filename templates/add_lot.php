@@ -88,7 +88,7 @@
 		$value = isset($lot['lot_date']) ? strip_tags($lot['lot_date']) : ''; ?>
 		<div class="form__item <?= $classname; ?>">
 			<label for="lot-date">Дата окончания торгов</label>
-			<input class="form__input-date" id="lot-date" type="date" name="lot_date" value="<?= $value; ?>">
+			<input class="form__input-date" id="lot-date" type="date" name="lot_date" value="<?= $value; ?>" required>
 			<span class="form__error"><?= $errors['lot_date']; ?></span>
 		</div>
 	</div>

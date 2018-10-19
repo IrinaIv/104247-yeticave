@@ -33,7 +33,7 @@
 		<div class="lot-item__right">
 			<div class="lot-item__state">
 				<div class="lot-item__timer timer">
-					10:54:12
+					<?= getFormattedTimeDifference($lotData['date_closed']); ?>
 				</div>
 				<div class="lot-item__cost-state">
 					<div class="lot-item__rate">
@@ -41,11 +41,11 @@
 						<span class="lot-item__cost"><?= getFormattedPrice(strip_tags($currentPrice)); ?></span>
 					</div>
 					<div class="lot-item__min-cost">
-						Мин. ставка <span><?= getFormattedPrice(strip_tags($lotData['bet_step'])); ?></span>
+						Мин. ставка <span><?= getFormattedPrice(strip_tags($minBet)); ?></span>
 					</div>
 				</div>
-				<?php if ($isAuth): ?>
-					<form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+				<?php if ($isBetAddShown): ?>
+					<form class="lot-item__form" action="lot.php?id=<?= $lotData['lot_id']; ?>" method="post">
 						<p class="lot-item__form-item">
 							<label for="cost">Ваша ставка</label>
 							<input id="cost" type="number" name="cost" placeholder="12 000">
@@ -60,9 +60,9 @@
 					<table class="history__list">
 						<?php foreach ($betList as $betItem): ?>
 							<tr class="history__item">
-								<td class="history__name"><?= $betItem['author']; ?></td>
-								<td class="history__price"><?= $betItem['price']; ?></td>
-								<td class="history__time"><?= $betItem['date']; ?></td>
+								<td class="history__name"><?= htmlspecialchars($betItem['user_name']); ?></td>
+								<td class="history__price"><?= getFormattedPrice(strip_tags($betItem['price'])); ?></td>
+								<td class="history__time"><?= getFormattedPastTime(htmlspecialchars($betItem['date_created'])); ?></td>
 							</tr>
 						<?php endforeach; ?>
 					</table>

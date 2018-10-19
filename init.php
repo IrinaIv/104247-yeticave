@@ -13,9 +13,8 @@ $connection = mysqli_connect($database['host'], $database['user'], $database['pa
 mysqli_set_charset($connection, 'utf8');
 
 if (!$connection) {
-	$error = mysqli_connect_error();
 	$errorPage = includeTemplate('error_page.php', [
-		'error'	=> $error
+		'error'	=> mysqli_connect_error(),
 	]);
 	print($errorPage);
 	exit();

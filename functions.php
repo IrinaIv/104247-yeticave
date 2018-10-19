@@ -34,14 +34,16 @@ function getFormattedPrice($price) {
 }
 
 /**
- * Функция считает, сколько секунд осталось до полуночи, и преобразует результат к формату ЧЧ:ММ
- * @return false|string
+ * Функция считает, сколько секунд осталось до переданного времени, и преобразует результат к формату ЧЧ:ММ
+ * @param string $futureTime Будущее время
+ * @return string
  */
-function getFormattedTimeDifference() {
-	$tomorrowTime = strtotime('tomorrow');
-	$secsToMidnight = $tomorrowTime - time();
+function getFormattedTimeDifference($futureTime) {
+	$secsToFutureTime = strtotime($futureTime) - time();
+	$hours = floor($secsToFutureTime / 3600);
+	$minutes = floor(($secsToFutureTime % 3600) / 60);
 
-	return gmdate('H:i', $secsToMidnight);
+	return $hours . ':' . $minutes;
 }
 
 /**
@@ -98,4 +100,38 @@ function db_get_prepare_stmt($connection, $sqlRequest, $data = []) {
 	}
 
 	return $stmt;
+}
+
+/**
+ * Функция определения единственного/множественного числа
+ * @param integer $n Число
+ * @param array $forms Массив склонений
+ * @return mixed
+ */
+function pluralForm($n, $forms) {
+	$n = abs(intval($n));
+
+	return $n%10==1&&$n%100!=11?$forms[0]:($n%10>=2&&$n%10<=4&&($n%100<10||$n%100>=20)?$forms[1]:$forms[2]);
+}
+
+/**
+ * Функция возвращает, сколько времени прошло от переданной даты до текущего времени
+ * @param string $date Дата
+ * @return string
+ */
+function getFormattedPastTime($date) {
+	$dateInterval = time() - strtotime($date);
+
+	if ($dateInterval >= 86400) {
+		$days = floor($dateInterval / 86400);
+		return $days . ' ' . pluralForm($days, ['день', 'дня', 'дней']) . ' назад';
+	} elseif ($dateInterval >= 3600) {
+		$hours = floor($dateInterval / 3600);
+		return $hours . ' ' . pluralForm($hours, ['час', 'часа', 'часов']) . ' назад';
+	} elseif ($dateInterval >= 60) {
+		$minutes = floor($dateInterval / 60);
+		return $minutes . ' ' . pluralForm($minutes, ['минуту', 'минуты', 'минут']) . ' назад';
+	} else {
+		return $dateInterval . ' ' . pluralForm($dateInterval, ['секунду', 'секунды', 'секунд']) . ' назад';
+	}
 }
