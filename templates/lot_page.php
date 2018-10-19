@@ -60,7 +60,7 @@
 					<table class="history__list">
 						<?php foreach ($betList as $betItem): ?>
 							<tr class="history__item">
-								<td class="history__name"><?= $betItem['user_name']; ?></td>
+								<td class="history__name"><?= htmlspecialchars($betItem['user_name']); ?></td>
 								<td class="history__price"><?= getFormattedPrice(strip_tags($betItem['price'])); ?></td>
 								<td class="history__time"><?= $betItem['date_created']; ?></td>
 							</tr>

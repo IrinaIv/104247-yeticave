@@ -26,27 +26,27 @@
 	$value = isset($user['email']) ? htmlspecialchars($user['email']) : ''; ?>
 	<div class="form__item <?= $classname; ?>"> <!-- form__item--invalid -->
 		<label for="email">E-mail*</label>
-		<input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= $value; ?>" >
+		<input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= $value; ?>" required>
 		<span class="form__error"><?= $errors['email']; ?></span>
 	</div>
 	<?php $classname = isset($errors['password']) ? 'form__item--invalid' : ''; ?>
 	<div class="form__item <?= $classname; ?>">
 		<label for="password">Пароль*</label>
-		<input id="password" type="password" name="password" placeholder="Введите пароль" >
+		<input id="password" type="password" name="password" placeholder="Введите пароль" required>
 		<span class="form__error"><?= $errors['password']; ?></span>
 	</div>
 	<?php $classname = isset($errors['name']) ? 'form__item--invalid' : '';
 	$value = isset($user['name']) ? htmlspecialchars($user['name']) : ''; ?>
 	<div class="form__item <?= $classname; ?>">
 		<label for="name">Имя*</label>
-		<input id="name" type="text" name="name" placeholder="Введите имя" value="<?= $value; ?>">
+		<input id="name" type="text" name="name" placeholder="Введите имя" value="<?= $value; ?>" required>
 		<span class="form__error"><?= $errors['name']; ?></span>
 	</div>
 	<?php $classname = isset($errors['message']) ? 'form__item--invalid' : '';
 	$value = isset($user['message']) ? htmlspecialchars($user['message']) : ''; ?>
 	<div class="form__item <?= $classname; ?>">
 		<label for="message">Контактные данные*</label>
-		<textarea id="message" name="message" placeholder="Напишите как с вами связаться" ><?= $value; ?></textarea>
+		<textarea id="message" name="message" placeholder="Напишите как с вами связаться" required><?= $value; ?></textarea>
 		<span class="form__error"><?= $errors['message']; ?></span>
 	</div>
 	<div class="form__item form__item--file form__item--last">
