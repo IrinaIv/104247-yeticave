@@ -49,30 +49,29 @@ $isBetAddShown = isset($_SESSION['user'])
 	&& $_SESSION['user']['user_id'] !== $lotData[0]['author_id']
 	&& (!count($betData) || $_SESSION['user']['user_id'] !== $betData[0]['user_id']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if (isset($_POST['cost'])) {
-		if (intval($_POST['cost']) >= $minBetPrice) {
-			$sql = 'INSERT INTO bets (date_created, user_id, lot_id, price)'
-				. ' VALUES (NOW(), ?, ?, ?)';
-			$stmt = db_get_prepare_stmt($connection, $sql, [
-				$_SESSION['user']['user_id'],
-				$lotData[0]['lot_id'],
-				$_POST['cost'],
-			]);
-			$result = mysqli_stmt_execute($stmt);
+if ($_SERVER['REQUEST_METHOD'] === 'POST'
+	&& isset($_POST['cost'])
+	&& intval($_POST['cost']) >= $minBetPrice) {
 
-			if (!$result) {
-				$errorPage = includeTemplate('error_page.php', [
-					'error'	=> mysqli_error($connection),
-				]);
-				print($errorPage);
-				exit();
-			}
+	$sql = 'INSERT INTO bets (date_created, user_id, lot_id, price)'
+		. ' VALUES (NOW(), ?, ?, ?)';
+	$stmt = db_get_prepare_stmt($connection, $sql, [
+		$_SESSION['user']['user_id'],
+		$lotData[0]['lot_id'],
+		$_POST['cost'],
+	]);
+	$result = mysqli_stmt_execute($stmt);
 
-			header('Location: lot.php?id=' . $lotData[0]['lot_id']);
-			exit();
-		}
+	if (!$result) {
+		$errorPage = includeTemplate('error_page.php', [
+			'error' => mysqli_error($connection),
+		]);
+		print($errorPage);
+		exit();
 	}
+
+	header('Location: lot.php?id=' . $lotData[0]['lot_id']);
+	exit();
 }
 
 $pageContent = includeTemplate('lot_page.php', [
