@@ -23,7 +23,8 @@ $lotsSql = 'SELECT lot_id, author_id, name, description, image AS img_url,'
 	. ' WHERE lot_id = ' . intval($_GET['id']);
 $lotData = getDataFromDatabase($connection, $lotsSql);
 
-$betSql = 'SELECT user_id, price, date_created FROM bets'
+$betSql = 'SELECT users.name AS user_name, bets.user_id AS user_id, price, date_created FROM bets'
+	. ' JOIN users ON bets.user_id = users.user_id'
 	. ' WHERE lot_id = ' . intval($_GET['id'])
 	. ' GROUP BY bet_id'
 	. ' ORDER BY date_created DESC';
@@ -45,9 +46,10 @@ if (!$lotData) {
 $minBetPrice = ($betData[0]['price'] ?? $lotData[0]['started_price']) + $lotData[0]['bet_step'];
 $isBetAddShown = isset($_SESSION['user'])
 	&& strtotime($lotData[0]['date_closed']) > time()
-	&& $_SESSION['user']['user_id'] !== $lotData[0]['author_id'];
+	&& $_SESSION['user']['user_id'] !== $lotData[0]['author_id']
+	&& (!count($betData) || $_SESSION['user']['user_id'] !== $betData[0]['user_id']);
 
-/*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if (isset($_POST['cost'])) {
 		if (intval($_POST['cost']) >= $minBetPrice) {
 			$sql = 'INSERT INTO bets (date_created, user_id, lot_id, price)'
@@ -66,9 +68,12 @@ $isBetAddShown = isset($_SESSION['user'])
 				print($errorPage);
 				exit();
 			}
+
+			header('Location: lot.php?id=' . $lotData[0]['lot_id']);
+			exit();
 		}
 	}
-}*/ /* TODO */
+}
 
 $pageContent = includeTemplate('lot_page.php', [
 	'isAuth'		=> isset($_SESSION['user']),
