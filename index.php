@@ -30,9 +30,18 @@ if (count($lotList) === 0) {
 	]);
 } else {
 	$pageContent = includeTemplate('index.php', [
-		'categoryList' => $categoryList,
-		'lotList' => $lotList,
+		'categoryList'	=> $categoryList,
+		'lotList'		=> $lotList,
 	]);
 }
 
-print(getLayoutContent('Главная', $pageContent, $categoryList));
+$layoutContent = includeTemplate('layout.php', [
+	'title'			=> 'Главная',
+	'isAuth'		=> isset($_SESSION['user']),
+	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
+	'userName'		=> $_SESSION['user']['name'] ?? '',
+	'content'		=> $pageContent,
+	'categoryList'	=> $categoryList,
+]);
+
+print($layoutContent);

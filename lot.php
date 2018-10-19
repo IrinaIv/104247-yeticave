@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
 		exit();
 	}
 
-	if (!$lotData) { /* TODO !check or array === 0 */
+	if (!$lotData) {
 		http_response_code(404);
 		exit();
 	}
@@ -40,8 +40,17 @@ $pageContent = includeTemplate('lot_page.php', [
 	'isAuth'		=> isset($_SESSION['user']),
 	'lotData'		=> $lotData[0],
 	'currentPrice'	=> $betData[0]['price'] ?? $lotData[0]['started_price'],
-	'betAmount'		=> 0, /* TODO count */
-	'betList'		=> [], /* TODO list */
+	'betAmount'		=> 0,
+	'betList'		=> [],
 ]);
 
-print(getLayoutContent($lotData[0]['name'], $pageContent, $categoryList));
+$layoutContent = includeTemplate('layout.php', [
+	'title'			=> $lotData[0]['name'],
+	'isAuth'		=> isset($_SESSION['user']),
+	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
+	'userName'		=> $_SESSION['user']['name'] ?? '',
+	'content'		=> $pageContent,
+	'categoryList'	=> $categoryList,
+]);
+
+print($layoutContent);

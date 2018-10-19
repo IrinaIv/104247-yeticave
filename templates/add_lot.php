@@ -1,5 +1,5 @@
 <nav class="nav">
-	<ul class="nav__list container"> <!-- TODO href? -->
+	<ul class="nav__list container">
 		<li class="nav__item">
 			<a href="all-lots.html">Доски и лыжи</a>
 		</li>
@@ -31,12 +31,13 @@
 			<span class="form__error"><?= $errors['lot_name']; ?></span>
 		</div>
 		<?php $classname = isset($errors['category']) ? 'form__item--invalid' : ''; ?>
-		<div class="form__item <?= $classname; ?>"> <!-- TODO save chosen category? -->
+		<div class="form__item <?= $classname; ?>">
 			<label for="category">Категория</label>
 			<select id="category" name="category" required>
 				<option value="">Выберите категорию</option>
-				<?php foreach ($categoryList as $categoryItem): ?>
-					<option value="<?= $categoryItem['category_id']; ?>"><?= $categoryItem['title']; ?></option>
+				<?php foreach ($categoryList as $categoryItem):
+					$selected = isset($lot['category']) && $lot['category'] === $categoryItem['category_id'] ? 'selected' : ''?>
+					<option value="<?= $categoryItem['category_id']; ?>" <?= $selected; ?>><?= $categoryItem['title']; ?></option>
 				<?php endforeach; ?>
 			</select>
 			<span class="form__error"><?= $errors['category']; ?></span>
@@ -55,10 +56,13 @@
 		<div class="preview">
 			<button class="preview__remove" type="button">x</button>
 			<div class="preview__img">
-				<img src="<?= $lot['img_path'] ?? 'img/avatar.jpg'; ?>" width="113" height="113" alt="Изображение лота"> <!-- TODO is it ok?-->
+				<img src="<?= $lot['img_path'] ?? 'img/avatar.jpg'; ?>" width="113" height="113" alt="Изображение лота">
 			</div>
 		</div>
 		<div class="form__input-file">
+			<?php if (isset($errors['file'])): ?>
+				<span class="form__error"><?= $errors['file']; ?></span>
+			<?php endif; ?>
 			<input class="visually-hidden" name="lot_img" type="file" id="photo2" value="">
 			<label for="photo2">
 				<span>+ Добавить</span>
@@ -81,10 +85,10 @@
 			<span class="form__error"><?= $errors['lot_step']; ?></span>
 		</div>
 		<?php $classname = isset($errors['lot_date']) ? 'form__item--invalid' : '';
-		$value = isset($lot['lot_date']) ? $lot['lot_date'] : ''; ?> <!-- TODO transform date -->
+		$value = isset($lot['lot_date']) ? strip_tags($lot['lot_date']) : ''; ?>
 		<div class="form__item <?= $classname; ?>">
 			<label for="lot-date">Дата окончания торгов</label>
-			<input class="form__input-date" id="lot-date" type="date" name="lot_date" value="<?= $value; ?>" required>
+			<input class="form__input-date" id="lot-date" type="date" name="lot_date" value="<?= $value; ?>">
 			<span class="form__error"><?= $errors['lot_date']; ?></span>
 		</div>
 	</div>

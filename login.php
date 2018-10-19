@@ -17,6 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$sql = "SELECT user_id, name, avatar, password, email FROM users WHERE email = '$email'";
 		$result = mysqli_query($connection, $sql);
 
+		if (!$result) {
+			$errorPage = includeTemplate('error_page.php', [
+				'error'	=> mysqli_error($connection),
+			]);
+			print($errorPage);
+			exit();
+		}
+
 		$user = $result ? mysqli_fetch_array($result, MYSQLI_ASSOC) : null;
 
 	} else {
@@ -39,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			'errors'	=> $errors
 		]);
 	} else {
-		header("Location: index.php");
+		header('Location: index.php');
 		exit();
 	}
 } else {

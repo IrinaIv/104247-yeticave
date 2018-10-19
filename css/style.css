@@ -897,6 +897,14 @@ input:invalid .form__error{
   height: 110px;
 }
 
+.form__input-file .form__error {
+  position: absolute;
+  display: block;
+  white-space: nowrap;
+  top: 0;
+  left: 130px;
+}
+
 .form__item--file label span {
   display: block;
   background-color: #cad5d8;

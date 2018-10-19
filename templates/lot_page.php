@@ -44,7 +44,7 @@
 						Мин. ставка <span><?= getFormattedPrice(strip_tags($lotData['bet_step'])); ?></span>
 					</div>
 				</div>
-				<?php if ($isAuth): ?> <!-- TODO change action url and add bet list -->
+				<?php if ($isAuth): ?>
 					<form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
 						<p class="lot-item__form-item">
 							<label for="cost">Ваша ставка</label>

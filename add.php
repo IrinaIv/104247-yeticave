@@ -18,24 +18,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 	if(!intval($lot['lot_rate']) > 0) {
-		$errors['lot_rate'] = 'Цена должна быть больше 0';
+		$errors['lot_rate'] = 'Укажите цену';
 	}
-	/* TODO check date DD MM YYYY? */
+	if(!intval($lot['lot_step']) > 0) {
+		$errors['lot_step'] = 'Укажите шаг ставки';
+	}
+	if (strtotime(strip_tags($lot['lot_date'])) < time() + 1) {
+		$errors['lot_date'] = 'Укажите будущую дату';
+	}
 
-	/*if ($_FILES['lot_img']['name']) {
+	if ($_FILES['lot_img']['name']) {
 		$tmpName = $_FILES['lot_img']['tmp_name'];
-		$path = $_FILES['lot_img']['name']; // TODO uniqueid func
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$fileType = finfo_file($finfo, $tmpName);
 		if ($fileType === 'image/jpeg' || $fileType === 'image/png') {
+			$path = uniqid() . '.' . substr($fileType, 6);
 			move_uploaded_file($tmpName, 'img/' . $path);
-			$lot['img_path'] = $path;
+			$lot['img_path'] = 'img/' . $path;
 		} else {
 			$errors['file'] = 'Загрузите картинку в нужном формате';
 		}
 	} else {
 		$errors['file'] = 'Вы не загрузили файл';
-	}*/ /* TODO uncomment and fix path */
+	}
 
 	if (count($errors)) {
 		$pageContent = includeTemplate('add_lot.php', [
@@ -59,16 +64,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		]);
 		$result = mysqli_stmt_execute($stmt);
 
-		if ($result) {
-			$lot_id = mysqli_insert_id($connection);
-			header('Location: lot.php?id=' . $lot_id);
-		} else { /* TODO else needed? */
+		if (!$result) {
 			$errorPage = includeTemplate('error_page.php', [
 				'error'	=> mysqli_error($connection),
 			]);
 			print($errorPage);
 			exit();
 		}
+
+		$lot_id = mysqli_insert_id($connection);
+		header('Location: lot.php?id=' . $lot_id);
+		exit();
 	}
 } else {
 	$pageContent = includeTemplate('add_lot.php', [
@@ -78,4 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	]);
 }
 
-print(getLayoutContent('Добавление лота', $pageContent, $categoryList));
+$layoutContent = includeTemplate('layout.php', [
+	'title'			=> 'Добавление лота',
+	'isAuth'		=> isset($_SESSION['user']),
+	'userAvatar'	=> $_SESSION['user']['avatar'] ?? '',
+	'userName'		=> $_SESSION['user']['name'] ?? '',
+	'content'		=> $pageContent,
+	'categoryList'	=> $categoryList,
+]);
+
+print($layoutContent);

@@ -26,7 +26,7 @@ $categoryList = getDataFromDatabase($connection, $categoriesSql);
 
 if ($categoryList === false) {
 	$errorPage = includeTemplate('error_page.php', [
-		'error'	=> mysqli_error($connection)
+		'error'	=> mysqli_error($connection),
 	]);
 	print($errorPage);
 	exit();
