@@ -34,14 +34,16 @@ function getFormattedPrice($price) {
 }
 
 /**
- * Функция считает, сколько секунд осталось до полуночи, и преобразует результат к формату ЧЧ:ММ
- * @return false|string
+ * Функция считает, сколько секунд осталось до переданного времени, и преобразует результат к формату ЧЧ:ММ
+ * @param string $futureTime Будущее время
+ * @return string
  */
-function getFormattedTimeDifference() {
-	$tomorrowTime = strtotime('tomorrow');
-	$secsToMidnight = $tomorrowTime - time();
+function getFormattedTimeDifference($futureTime) {
+	$secsToFutureTime = strtotime($futureTime) - time();
+	$hours = floor($secsToFutureTime / 3600);
+	$minutes = floor(($secsToFutureTime % 3600) / 60);
 
-	return gmdate('H:i', $secsToMidnight);
+	return $hours . ':' . $minutes;
 }
 
 /**

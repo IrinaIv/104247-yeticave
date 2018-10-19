@@ -2,15 +2,14 @@
 require_once('./init.php');
 
 if (!$connection) {
-	$error = mysqli_connect_error();
 	$errorPage = includeTemplate('error_page.php', [
-		'error'	=> $error,
+		'error'	=> mysqli_connect_error(),
 	]);
 	print($errorPage);
 	exit();
 }
 
-$lotsSql = 'SELECT lot_id, name, started_price, image AS img_url, categories.title AS category_name FROM lots'
+$lotsSql = 'SELECT lot_id, name, started_price, image AS img_url, date_closed, categories.title AS category_name FROM lots'
 	. ' JOIN categories ON lots.category_id = categories.category_id'
 	. ' WHERE date_closed IS NULL OR date_closed > NOW()'
 	. ' ORDER BY date_created DESC';
