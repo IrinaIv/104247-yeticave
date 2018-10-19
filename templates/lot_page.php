@@ -62,7 +62,7 @@
 							<tr class="history__item">
 								<td class="history__name"><?= htmlspecialchars($betItem['user_name']); ?></td>
 								<td class="history__price"><?= getFormattedPrice(strip_tags($betItem['price'])); ?></td>
-								<td class="history__time"><?= $betItem['date_created']; ?></td>
+								<td class="history__time"><?= getFormattedPastTime(htmlspecialchars($betItem['date_created'])); ?></td>
 							</tr>
 						<?php endforeach; ?>
 					</table>
